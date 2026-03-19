@@ -1,57 +1,74 @@
-# Sample Hardhat 3 Beta Project (`mocha` and `ethers`)
+# 🌐 Decentralized Drive (Web3 File Storage)
 
-This project showcases a Hardhat 3 Beta project using `mocha` for tests and the `ethers` library for Ethereum interactions.
+**Live Demo:** [Click Here to view the Live DApp](https://<YOUR_VERCEL_LINK>.vercel.app/)
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+A full-stack Web3 application that allows users to securely upload, store, and manage files on the decentralized web. This project leverages IPFS for immutable file storage and Ethereum smart contracts for strict cryptographic access control.
 
-## Project Overview
+## ✨ Key Features
+* **Decentralized Storage:** Files are pinned to IPFS via Pinata, ensuring they cannot be arbitrarily deleted or altered.
+* **Smart Contract Access Control:** Only the owner and explicitly authorized wallet addresses can fetch and view the uploaded files.
+* **Access Management:** Users can dynamically grant or revoke file access to other Ethereum wallets.
+* **Wallet Integration:** Seamlessly connects with MetaMask or Rabby Wallet for authentication and transaction signing.
 
-This example project includes:
+## 🛠️ Tech Stack
+* **Frontend:** React.js, CSS
+* **Web3 Connectivity:** Ethers.js (v6)
+* **Smart Contracts:** Solidity (v0.8.28)
+* **Development Environment:** Hardhat (v3)
+* **Storage:** IPFS (via Pinata API)
+* **Deployment:** Sepolia Testnet (Blockchain) & Vercel (Frontend)
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using `mocha` and ethers.js
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+## 🚀 Getting Started (Run Locally)
 
-## Usage
+If you would like to run this project on your local machine, follow these steps:
 
-### Running Tests
-
-To run all the tests in the project, execute the following command:
-
-```shell
-npx hardhat test
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/](https://github.com/)<YOUR_GITHUB_USERNAME>/decentralized-drive.git
+cd decentralized-drive
 ```
 
-You can also selectively run the Solidity or `mocha` tests:
+### 2. Install Dependencies
+Install the required packages for both the backend (Hardhat) and frontend (React).
+```bash
+# Install backend dependencies
+npm install
 
-```shell
-npx hardhat test solidity
-npx hardhat test mocha
+# Install frontend dependencies
+cd client
+npm install
 ```
 
-### Make a deployment to Sepolia
+### 3. Set Up Environment Variables
+You will need to create two separate `.env` files.
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
+**Backend `.env` (in the root directory):**
+```text
+SEPOLIA_RPC_URL="your_alchemy_or_public_rpc_url"
+SEPOLIA_PRIVATE_KEY="your_wallet_private_key"
 ```
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
+**Frontend `.env` (inside the `/client` directory):**
+```text
+REACT_APP_PINATA_JWT="your_pinata_jwt_token"
 ```
 
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
+### 4. Deploy the Smart Contract
+Compile and deploy the Solidity contract to your preferred network (e.g., localhost or Sepolia).
+```bash
+# Return to root directory
+cd ..
+npx hardhat compile
+npx hardhat run scripts/deploy.ts --network sepolia
 ```
+*Note: Copy the deployed contract address and update the `contractAddress` variable in `client/src/App.js`.*
+
+### 5. Start the React Frontend
+```bash
+cd client
+npm start
+```
+The application will launch at `http://localhost:3000`.
+
+## 📜 Smart Contract Overview
+The `Upload.sol` contract manages a mapping of addresses to an array of IPFS hashes. It includes built-in `require` statements to ensure that when a user requests an image array, the caller is either the owner of those files or an address that has been explicitly granted permission via the `allow` function.
