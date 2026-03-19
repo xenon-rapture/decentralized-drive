@@ -1,0 +1,129 @@
+/* Import a clean, modern font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #0d1117; /* Deep slate background */
+  color: #c9d1d9;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* --- The Top Navigation Bar --- */
+.navbar {
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #161b22;
+  box-sizing: border-box;
+  border-bottom: 1px solid #30363d;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #58a6ff; /* Web3 neon blue */
+  letter-spacing: 1px;
+}
+
+.account-box {
+  background-color: #21262d;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #30363d;
+  font-size: 0.85rem;
+  color: #8b949e;
+  font-family: monospace;
+}
+
+/* --- The Main Dashboard Area --- */
+.main-content {
+  margin-top: 50px;
+  padding: 40px;
+  background-color: #161b22;
+  border-radius: 12px;
+  border: 1px solid #30363d;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+}
+
+.main-content h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: #ffffff;
+  border-bottom: 1px solid #30363d;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+/* --- Upload Form Styling --- */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+input[type="file"] {
+  background-color: #0d1117;
+  color: #c9d1d9;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px dashed #58a6ff;
+  width: 100%;
+  max-width: 350px;
+  cursor: pointer;
+  transition: border 0.3s ease;
+}
+
+input[type="file"]:hover {
+  border: 1px dashed #79c0ff;
+}
+
+.textArea {
+  font-size: 0.9rem;
+  color: #8b949e;
+}
+
+/* --- Buttons --- */
+.upload, .button {
+  background-color: #238636;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-size: 1rem;
+}
+
+.upload:hover:not(:disabled), .button:hover {
+  background-color: #2ea043;
+  transform: translateY(-2px);
+}
+
+.upload:disabled {
+  background-color: #21262d;
+  color: #8b949e;
+  cursor: not-allowed;
+}
+
+.placeholder-text {
+  font-size: 0.85rem;
+  color: #8b949e;
+  margin-top: 30px;
+  font-style: italic;
+}

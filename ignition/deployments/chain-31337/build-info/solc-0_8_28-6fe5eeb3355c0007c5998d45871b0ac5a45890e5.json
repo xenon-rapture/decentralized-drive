@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-6fe5eeb3355c0007c5998d45871b0ac5a45890e5",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/Upload.sol": "project/contracts/Upload.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/Upload.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract Upload {\r\n    // Struct to keep track of who has been granted access\r\n    struct Access {\r\n        address user;\r\n        bool access;\r\n    }\r\n\r\n    // Maps a user's address to an array of their file hashes (IPFS strings)\r\n    mapping(address => string[]) value;\r\n    \r\n    // Maps [Owner Address] -> [Viewer Address] -> [True/False]\r\n    mapping(address => mapping(address => bool)) ownership;\r\n    \r\n    // Keeps a list of all addresses that an owner has shared with\r\n    mapping(address => Access[]) accessList;\r\n    \r\n    // Helper to avoid adding the same person to the accessList multiple times\r\n    mapping(address => mapping(address => bool)) previousData;\r\n\r\n    // 1. Upload a new file hash\r\n    function add(address _user, string memory url) external {\r\n        value[_user].push(url);\r\n    }\r\n\r\n    // 2. Grant someone access to your files\r\n    function allow(address user) external {\r\n        ownership[msg.sender][user] = true;\r\n        \r\n        if (previousData[msg.sender][user]) {\r\n            // If they were added before, just find them and update their status to true\r\n            for (uint i = 0; i < accessList[msg.sender].length; i++) {\r\n                if (accessList[msg.sender][i].user == user) {\r\n                    accessList[msg.sender][i].access = true;\r\n                }\r\n            }\r\n        } else {\r\n            // If it's their first time getting access, add them to the list\r\n            accessList[msg.sender].push(Access(user, true));\r\n            previousData[msg.sender][user] = true;\r\n        }\r\n    }\r\n\r\n    // 3. Revoke someone's access\r\n    function disallow(address user) external {\r\n        ownership[msg.sender][user] = false;\r\n        \r\n        for (uint i = 0; i < accessList[msg.sender].length; i++) {\r\n            if (accessList[msg.sender][i].user == user) {\r\n                accessList[msg.sender][i].access = false;\r\n            }\r\n        }\r\n    }\r\n\r\n    // 4. View files (Checks if you are owner OR have permission)\r\n    function display(address _user) external view returns (string[] memory) {\r\n        require(\r\n            _user == msg.sender || ownership[_user][msg.sender],\r\n            \"You don't have access to these files!\"\r\n        );\r\n        return value[_user];\r\n    }\r\n\r\n    // 5. See everyone you have shared your files with\r\n    function shareAccess() external view returns (Access[] memory) {\r\n        return accessList[msg.sender];\r\n    }\r\n}"
+      }
+    }
+  }
+}
