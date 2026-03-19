@@ -1,6 +1,6 @@
 # 🌐 Decentralized Drive (Web3 File Storage)
 
-**Live Demo:** [Click Here to view the Live DApp](https://<YOUR_VERCEL_LINK>.vercel.app/)
+**Live Demo:** [Click Here to view the Live DApp](https://decentralized-drive-nine.vercel.app/)
 
 A full-stack Web3 application that allows users to securely upload, store, and manage files on the decentralized web. This project leverages IPFS for immutable file storage and Ethereum smart contracts for strict cryptographic access control.
 
@@ -24,7 +24,7 @@ If you would like to run this project on your local machine, follow these steps:
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/](https://github.com/)<YOUR_GITHUB_USERNAME>/decentralized-drive.git
+git clone https://github.com/xenon-rapture/decentralized-drive.git
 cd decentralized-drive
 ```
 
